@@ -21,14 +21,17 @@ class SpaServingTest {
     void protectedApiAnswers401WithoutABrowserLoginPrompt() throws Exception {
         mvc.perform(get("/api/matches"))
                 .andExpect(status().isUnauthorized())
-                .andExpect(header().doesNotExist("WWW-Authenticate"));
+                // Bearer, never Basic: a Basic challenge is what makes browsers show a login box.
+                .andExpect(header().string("WWW-Authenticate", org.hamcrest.Matchers.startsWith("Bearer")));
     }
 
     @Test
     void frontendRoutesAreNotBlockedBySecurity() throws Exception {
-        // No built frontend exists in unit tests, so these are 404, never 401.
-        mvc.perform(get("/")).andExpect(status().isNotFound());
-        mvc.perform(get("/dashboard/settings")).andExpect(status().isNotFound());
+        // Depending on whether a frontend build is on the classpath these are 200 or 404, never 401.
+        for (String path : new String[] {"/", "/dashboard/settings"}) {
+            mvc.perform(get(path)).andExpect(result ->
+                    org.assertj.core.api.Assertions.assertThat(result.getResponse().getStatus()).isNotEqualTo(401));
+        }
     }
 
     @Test

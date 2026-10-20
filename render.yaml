@@ -11,3 +11,5 @@ services:
         sync: false
       - key: DB_PASSWORD
         sync: false
+      - key: JWT_SECRET
+        generateValue: true

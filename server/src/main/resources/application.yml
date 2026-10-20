@@ -15,6 +15,12 @@ spring:
   flyway:
     enabled: true
 
+app:
+  jwt:
+    # Required. Use a long random value (32+ characters) and never commit it.
+    secret: ${JWT_SECRET}
+    ttl: ${JWT_TTL:PT1H}
+
 management:
   endpoints:
     web:

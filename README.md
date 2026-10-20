@@ -2,7 +2,7 @@
 
 Find a partner for a mock technical interview by topic, level and time.
 
-Status: early scaffold. The server builds, the matching rule is implemented and tested, and the web app talks to the server. Auth, availability and live matching are next. See [docs/DESIGN.md](docs/DESIGN.md).
+Status: early build. Register, login and a protected profile endpoint work with signed JWT tokens, the matching rule is implemented and tested, and the web app has a login screen. Availability and live matching are next. See [docs/DESIGN.md](docs/DESIGN.md).
 
 ## Stack
 
@@ -23,7 +23,7 @@ In a second terminal:
 cd web && npm install && npm run dev
 ```
 
-Open the forwarded port 5173. The page shows whether the server is reachable.
+Open the forwarded port 5173. You can create an account, log in, and log out. In a Codespace the server gets a development-only `JWT_SECRET` from the dev container. Anywhere else, set `JWT_SECRET` to a random string of at least 32 characters before starting the server.
 
 ## Test it
 

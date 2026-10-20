@@ -6,3 +6,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+
+app:
+  jwt:
+    secret: test-secret-test-secret-test-secret-1234
+    ttl: PT1H
