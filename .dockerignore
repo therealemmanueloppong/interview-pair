@@ -1,0 +1,8 @@
+.git
+.github
+.devcontainer
+docs
+**/node_modules
+**/dist
+**/target
+server/src/main/resources/static

@@ -34,8 +34,13 @@ cd web && npm test
 
 Server tests use an in-memory H2 database in PostgreSQL mode. A Testcontainers suite against real PostgreSQL is planned.
 
+## Deploy
+
+One Docker image serves the whole app (Spring Boot serves the built React pages). See [docs/DEPLOY.md](docs/DEPLOY.md) for Neon, Render and a local Docker test.
+
 ## Layout
 
 - `server/` Spring Boot API
 - `web/` React app
-- `docs/` design notes
+- `docs/` design notes and deploy guide
+- `Dockerfile`, `render.yaml` deploy setup

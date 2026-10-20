@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Built React app, copied in by the Docker build
+src/main/resources/static/
