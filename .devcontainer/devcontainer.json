@@ -1,0 +1,15 @@
+{
+  "name": "InterviewPair",
+  "image": "mcr.microsoft.com/devcontainers/java:1-21-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": { "version": "22" },
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "forwardPorts": [8080, 5173, 5432],
+  "postCreateCommand": "cd web && npm install",
+  "customizations": {
+    "vscode": {
+      "extensions": ["vscjava.vscode-java-pack", "vmware.vscode-boot-dev-pack", "bradlc.vscode-tailwindcss"]
+    }
+  }
+}
