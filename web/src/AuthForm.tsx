@@ -38,19 +38,33 @@ export default function AuthForm({ onAuthenticated }: Props) {
     }
   }
 
-  const input = 'w-full rounded border p-2'
+  const input = 'auth-input'
   const problem = (name: string) =>
-    fieldErrors[name] ? <p className="mt-1 text-sm text-red-700">{fieldErrors[name]}</p> : null
+    fieldErrors[name] ? (
+      <p className="mt-1 text-sm text-red-700">{fieldErrors[name]}</p>
+    ) : null
 
   return (
-    <form onSubmit={submit} className="flex flex-col gap-3" aria-label={mode === 'login' ? 'Log in' : 'Create account'}>
-      <h2 className="text-xl font-semibold">{mode === 'login' ? 'Log in' : 'Create your account'}</h2>
+    <form
+      onSubmit={submit}
+      className="auth-form"
+      aria-label={mode === 'login' ? 'Log in' : 'Create account'}
+    >
+      <h2 className="auth-title">
+        {mode === 'login' ? 'Log in' : 'Create your account'}
+      </h2>
 
       {mode === 'register' && (
         <div>
           <label className="block">
             <span className="text-sm">Display name</span>
-            <input className={input} value={displayName} onChange={(e) => setDisplayName(e.target.value)} required maxLength={80} />
+            <input
+              className={input}
+              value={displayName}
+              onChange={(e) => setDisplayName(e.target.value)}
+              required
+              maxLength={80}
+            />
           </label>
           {problem('displayName')}
         </div>
@@ -59,7 +73,14 @@ export default function AuthForm({ onAuthenticated }: Props) {
       <div>
         <label className="block">
           <span className="text-sm">Email</span>
-          <input className={input} type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+          <input
+            className={input}
+            type="email"
+            autoComplete="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
         </label>
         {problem('email')}
       </div>
@@ -70,37 +91,50 @@ export default function AuthForm({ onAuthenticated }: Props) {
           <input
             className={input}
             type="password"
-            autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
+            autoComplete={
+              mode === 'login' ? 'current-password' : 'new-password'
+            }
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
             minLength={mode === 'register' ? 8 : undefined}
           />
         </label>
-        {mode === 'register' && <p className="mt-1 text-xs text-slate-500">At least 8 characters.</p>}
+        {mode === 'register' && (
+          <p className="mt-1 text-xs text-slate-500">At least 8 characters.</p>
+        )}
         {problem('password')}
       </div>
 
       {error && (
-        <p role="alert" className="rounded border border-red-300 bg-red-50 p-2 text-sm text-red-800">
+        <p
+          role="alert"
+          className="rounded border border-red-300 bg-red-50 p-2 text-sm text-red-800"
+        >
           {error}
         </p>
       )}
 
-      <button type="submit" disabled={busy} className="rounded bg-slate-900 p-2 text-white disabled:opacity-50">
-        {busy ? 'Please wait...' : mode === 'login' ? 'Log in' : 'Create account'}
+      <button type="submit" disabled={busy} className="button primary wide">
+        {busy
+          ? 'Please wait...'
+          : mode === 'login'
+            ? 'Log in'
+            : 'Create account'}
       </button>
 
       <button
         type="button"
-        className="text-sm underline"
+        className="text-button auth-switch"
         onClick={() => {
           setMode(mode === 'login' ? 'register' : 'login')
           setError(null)
           setFieldErrors({})
         }}
       >
-        {mode === 'login' ? 'New here? Create an account' : 'Already have an account? Log in'}
+        {mode === 'login'
+          ? 'New here? Create an account'
+          : 'Already have an account? Log in'}
       </button>
     </form>
   )
