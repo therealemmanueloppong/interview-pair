@@ -13,7 +13,7 @@ export class ApiError extends Error {
   }
 }
 
-async function request<T>(path: string, init: RequestInit = {}, token?: string): Promise<T> {
+export async function request<T>(path: string, init: RequestInit = {}, token?: string): Promise<T> {
   const headers: Record<string, string> = { ...(init.headers as Record<string, string>) }
   if (init.body) headers['Content-Type'] = 'application/json'
   if (token) headers.Authorization = `Bearer ${token}`
@@ -30,6 +30,8 @@ async function request<T>(path: string, init: RequestInit = {}, token?: string):
     }
     throw new ApiError(res.status, message, fields)
   }
+  // A 204 has no body (for example after cancelling a request).
+  if (res.status === 204) return undefined as T
   return res.json()
 }
 

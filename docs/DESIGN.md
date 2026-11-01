@@ -42,9 +42,22 @@ The schema lives in Flyway migrations under `server/src/main/resources/db/migrat
 
 React and TypeScript single-page app, a Spring Boot REST and WebSocket API, and PostgreSQL. Video is out of scope: a match gets a generated meeting link from an existing provider.
 
+## Mock interview rooms (built)
+
+The core flow above is implemented with two changes. Students request one two-hour slot on the UTC grid
+(instead of a free-form window) and the same `MatchingService` pairs them when the topic, level and slot
+agree. Each session then runs two rounds with a role switch between them, in a live room with a shared code
+editor where only the person answering can type. The server keeps the interviewer's hints and model answer
+away from the person answering, and WebSockets authenticate with one-time tickets. The full description,
+protocol and limits are in [MOCK_INTERVIEWS.md](MOCK_INTERVIEWS.md).
+
+New tables (migration V2): `interview_requests`, `practice_sessions`, `session_feedback`. New endpoints:
+`/api/interview-requests`, `/api/sessions` (list, read, switch, finish, feedback, `ws-ticket`) and the
+`/ws/sessions` WebSocket. The older `availability` and `matches` tables are not used by this flow.
+
 ## Out of scope for v1
 
-Custom video, a code editor shared between partners, payments, mobile apps, and anything involving recorded sessions.
+Custom video, running submitted code, payments, mobile apps, and anything involving recorded sessions.
 
 ## Milestones
 

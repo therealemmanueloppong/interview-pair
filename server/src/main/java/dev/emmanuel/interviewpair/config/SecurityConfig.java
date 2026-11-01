@@ -13,7 +13,9 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     // Clients log in at /api/auth/login, then send "Authorization: Bearer <token>" on later calls.
-    // Anything outside /api, /actuator and /ws is the React app's static files and is public.
+    // Anything outside /api and /actuator is the React app's static files and is public. The /ws
+    // handshake is open to HTTP security because browsers cannot send the Bearer header there. The
+    // socket authenticates with a one-time ticket instead (see WsTicketService).
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -23,7 +25,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.GET, "/api/health", "/actuator/health").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/auth/register", "/api/auth/login").permitAll()
-                .requestMatchers("/api/**", "/actuator/**", "/ws/**").authenticated()
+                .requestMatchers("/ws/**").permitAll()
+                .requestMatchers("/api/**", "/actuator/**").authenticated()
                 .anyRequest().permitAll());
         return http.build();
     }
