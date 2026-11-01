@@ -2,7 +2,7 @@
 
 Find a partner for a mock technical interview by topic, level and time.
 
-Status: early build. Register, login and a protected profile endpoint work with signed JWT tokens, the matching rule is implemented and tested, and the web app has a login screen. Availability and live matching are next. See [docs/DESIGN.md](docs/DESIGN.md).
+Status: early build. Register, login and a protected profile endpoint work with signed JWT tokens, the matching rule is implemented and tested, and the web app includes a light/dark practice dashboard. After login, users can set a weekly goal, practice with curated prompts and a focus timer, and keep a personal reflection notebook. Practice records are browser-local and scoped to the signed-in account; they are not synced to the server. Availability and live partner matching are next. See [the dashboard guide](docs/DASHBOARD.md). See [docs/DESIGN.md](docs/DESIGN.md).
 
 ## Stack
 
