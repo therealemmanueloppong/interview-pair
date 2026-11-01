@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 import java.util.random.RandomGenerator;
@@ -52,7 +53,8 @@ public class InterviewService {
     private final Clock clock;
     private final ApplicationEventPublisher events;
     private final TransactionTemplate transaction;
-    private final RandomGenerator random = RandomGenerator.getDefault();
+    // Not RandomGenerator.getDefault(): the slim JRE in the Docker image has no generator for it.
+    private final RandomGenerator random = new Random();
 
     // Two people asking at the same moment must not both miss each other, so matching runs one at a
     // time. This is enough for a single server instance. More instances would need a database lock.

@@ -5,8 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
-import java.util.random.RandomGenerator;
 import org.junit.jupiter.api.Test;
 
 class QuestionBankTest {
@@ -49,7 +49,7 @@ class QuestionBankTest {
     @Test
     void pickTwoGivesTwoDifferentQuestionsForTheRequestedTopicAndLevel() {
         for (int i = 0; i < 50; i++) {
-            List<Question> picked = bank.pickTwo(Topic.ALGORITHMS, Level.INTERMEDIATE, RandomGenerator.getDefault());
+            List<Question> picked = bank.pickTwo(Topic.ALGORITHMS, Level.INTERMEDIATE, new Random());
             assertThat(picked).hasSize(2);
             assertThat(picked.get(0).id()).isNotEqualTo(picked.get(1).id());
             assertThat(picked).allMatch(q -> q.topic() == Topic.ALGORITHMS && q.level() == Level.INTERMEDIATE);
