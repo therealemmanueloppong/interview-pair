@@ -2,6 +2,7 @@ package dev.emmanuel.interviewpair.api;
 
 import dev.emmanuel.interviewpair.auth.AuthService.EmailTakenException;
 import dev.emmanuel.interviewpair.auth.AuthService.InvalidCredentialsException;
+import dev.emmanuel.interviewpair.interview.InterviewException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
@@ -31,5 +32,10 @@ public class ApiExceptionHandler {
     @ExceptionHandler(InvalidCredentialsException.class)
     ResponseEntity<ErrorBody> badCredentials(InvalidCredentialsException e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorBody(e.getMessage(), Map.of()));
+    }
+
+    @ExceptionHandler(InterviewException.class)
+    ResponseEntity<ErrorBody> interview(InterviewException e) {
+        return ResponseEntity.status(e.status()).body(new ErrorBody(e.getMessage(), Map.of()));
     }
 }

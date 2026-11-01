@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import type { User } from './api'
+import MockInterviews from './MockInterviews'
 import {
   practiceKey,
   prompts,
@@ -11,7 +12,7 @@ import {
 } from './practice'
 import type { Confidence, PracticeData, PracticeEntry, Topic } from './practice'
 
-type View = 'Overview' | 'Practice room' | 'My notebook'
+type View = 'Overview' | 'Practice room' | 'Mock interviews' | 'My notebook'
 type Props = { user: User; onLogout: () => void }
 function Arrow() {
   return <span aria-hidden="true">↗</span>
@@ -21,6 +22,7 @@ function Icon({ name }: { name: string }) {
     overview: 'M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z',
     practice: 'm8 4 12 8-12 8V4Z',
     notebook: 'M5 3h14v18H5zM9 8h6M9 12h6M9 16h4',
+    mock: 'M7 8a3 3 0 1 0 0 .01M17 8a3 3 0 1 0 0 .01M2 20c0-3 2.5-5 5-5s5 2 5 5M12 20c0-3 2.5-5 5-5s5 2 5 5',
     clock: 'M12 7v5l3 2',
     check: 'm5 12 4 4L19 6',
   }
@@ -198,7 +200,9 @@ export default function Dashboard({ user, onLogout }: Props) {
       <aside className="sidebar" aria-label="Workspace navigation">
         <div className="workspace-label">YOUR WORKSPACE</div>
         <nav>
-          {(['Overview', 'Practice room', 'My notebook'] as View[]).map(
+          {(
+            ['Overview', 'Practice room', 'Mock interviews', 'My notebook'] as View[]
+          ).map(
             (item, i) => (
               <button
                 key={item}
@@ -209,7 +213,7 @@ export default function Dashboard({ user, onLogout }: Props) {
                   setNotice('')
                 }}
               >
-                <Icon name={['overview', 'practice', 'notebook'][i]} />
+                <Icon name={['overview', 'practice', 'mock', 'notebook'][i]} />
                 {item}
                 {item === 'My notebook' && data.entries.length > 0 && (
                   <span className="count">{data.entries.length}</span>
@@ -222,7 +226,7 @@ export default function Dashboard({ user, onLogout }: Props) {
           <span className="tiny-label">BETTER, TOGETHER</span>
           <p>Good interviews start with a little practice.</p>
           <span className="muted small">
-            Partner matching is on the way. Build your confidence here today.
+            Schedule a mock interview and we will pair you with a partner.
           </span>
         </div>
         <div className="profile">
@@ -260,7 +264,9 @@ export default function Dashboard({ user, onLogout }: Props) {
                 ? 'MAKE ROOM FOR PROGRESS'
                 : view === 'Practice room'
                   ? 'ONE PROBLEM. YOUR FULL ATTENTION.'
-                  : 'TURN PRACTICE INTO PROGRESS'}
+                  : view === 'Mock interviews'
+                    ? 'THE REAL THING, WITHOUT THE PRESSURE'
+                    : 'TURN PRACTICE INTO PROGRESS'}
             </p>
             <h1>
               {view === 'Overview' ? (
@@ -273,6 +279,10 @@ export default function Dashboard({ user, onLogout }: Props) {
                 <>
                   Your focus <span className="serif">starts here.</span>
                 </>
+              ) : view === 'Mock interviews' ? (
+                <>
+                  Practice with <span className="serif">a partner.</span>
+                </>
               ) : (
                 <>
                   Keep the <span className="serif">learning.</span>
@@ -284,10 +294,12 @@ export default function Dashboard({ user, onLogout }: Props) {
                 ? `Welcome back, ${firstName}. Give your next interview a head start.`
                 : view === 'Practice room'
                   ? 'Think out loud. Explore the trade-offs. Make your thinking visible.'
-                  : 'Your sessions, honest reflections, and the things to try next.'}
+                  : view === 'Mock interviews'
+                    ? 'Take turns asking and answering, then swap. Explaining your thinking to a person is the skill.'
+                    : 'Your sessions, honest reflections, and the things to try next.'}
             </p>
           </div>
-          {view !== 'Practice room' && (
+          {view !== 'Practice room' && view !== 'Mock interviews' && (
             <button className="button secondary" onClick={() => openLog()}>
               + Log practice
             </button>
@@ -673,6 +685,7 @@ export default function Dashboard({ user, onLogout }: Props) {
             </section>
           </>
         )}
+        {view === 'Mock interviews' && <MockInterviews />}
         {view === 'My notebook' && (
           <section className="panel notebook">
             <div className="section-heading">

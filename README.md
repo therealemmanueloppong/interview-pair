@@ -2,7 +2,7 @@
 
 Find a partner for a mock technical interview by topic, level and time.
 
-Status: early build. Register, login and a protected profile endpoint work with signed JWT tokens, the matching rule is implemented and tested, and the web app includes a light/dark practice dashboard. After login, users can set a weekly goal, practice with curated prompts and a focus timer, and keep a personal reflection notebook. Practice records are browser-local and scoped to the signed-in account; they are not synced to the server. Availability and live partner matching are next. See [the dashboard guide](docs/DASHBOARD.md). See [docs/DESIGN.md](docs/DESIGN.md).
+Status: early build. Register, login and a protected profile endpoint work with signed JWT tokens, and the web app has a light/dark practice dashboard (weekly goal, focus timer, curated prompts, a reflection notebook that stays in your browser). **Mock interviews are working**: you schedule a topic, level and time, the server pairs you with another student, and you practice in a live room with a shared code editor where only the person answering can type, then switch roles. See [docs/MOCK_INTERVIEWS.md](docs/MOCK_INTERVIEWS.md), [the dashboard guide](docs/DASHBOARD.md) and [docs/DESIGN.md](docs/DESIGN.md).
 
 ## Stack
 
@@ -23,7 +23,7 @@ In a second terminal:
 cd web && npm install && npm run dev
 ```
 
-Open the forwarded port 5173. You can create an account, log in, and log out. In a Codespace the server gets a development-only `JWT_SECRET` from the dev container. Anywhere else, set `JWT_SECRET` to a random string of at least 32 characters before starting the server.
+Open the forwarded port 5173. You can create an account, log in, and log out. To try a mock interview on your own, open the app in two different browsers (or one normal and one private window), create two accounts, and schedule the same topic, level and time from both. The second request pairs you, and the two rooms update live. In a Codespace the server gets a development-only `JWT_SECRET` from the dev container. Anywhere else, set `JWT_SECRET` to a random string of at least 32 characters before starting the server.
 
 ## Test it
 

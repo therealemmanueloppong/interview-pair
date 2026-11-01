@@ -10,6 +10,7 @@ export default defineConfig({
     allowedHosts: ['.app.github.dev'],
     proxy: {
       '/api': 'http://localhost:8080',
+      '/ws': { target: 'http://localhost:8080', ws: true },
     },
   },
   test: {
